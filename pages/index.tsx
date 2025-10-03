@@ -115,11 +115,11 @@ export default function Home() {
         {categories.map((category, idx) => (
           <section key={idx} className="mb-32 slide-up" style={{ animationDelay: `${idx * 0.1}s` }}>
             {/* 카테고리 헤더 */}
-            <div className="flex items-center gap-4 mb-8 p-6 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/20">
+            <div className="category-header">
               <div className="category-icon">
                 {category.icon}
               </div>
-              <h2 className="text-3xl font-bold text-white drop-shadow-lg">
+              <h2 className="category-title">
                 {category.title}
               </h2>
             </div>
