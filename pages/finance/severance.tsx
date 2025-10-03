@@ -129,7 +129,7 @@ export default function SeveranceCalculator() {
               {/* 세금 공제 내역 */}
               <div className="glass-card">
                 <div className="text-sm text-gray-600 mb-4 font-semibold">세금 공제 내역</div>
-                <div className="space-y-3">
+                <div className="space-y-4">
                   <div className="flex justify-between items-center">
                     <span className="text-gray-700">퇴직금</span>
                     <span className="font-semibold text-gray-900">{formatNumber(result.severancePay)}원</span>
@@ -142,7 +142,7 @@ export default function SeveranceCalculator() {
                     <span>- 지방소득세</span>
                     <span className="font-semibold">{formatNumber(result.localIncomeTax)}원</span>
                   </div>
-                  <div className="border-t-2 border-gray-300 pt-3 flex justify-between items-center text-lg font-bold">
+                  <div className="border-t-2 border-gray-300 pt-4 flex justify-between items-center text-lg font-bold">
                     <span className="text-gray-900">실수령액</span>
                     <span className="text-purple-600">{formatNumber(result.netAmount)}원</span>
                   </div>

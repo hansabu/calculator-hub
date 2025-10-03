@@ -169,11 +169,11 @@ export default function LoanCalculator() {
                     <tbody className="divide-y divide-gray-200">
                       {result.schedule.slice(0, 12).map((item) => (
                         <tr key={item.month} className="hover:bg-gray-50">
-                          <td className="px-4 py-2">{item.month}</td>
-                          <td className="px-4 py-2 text-right">{formatNumber(item.principal)}</td>
-                          <td className="px-4 py-2 text-right">{formatNumber(item.interest)}</td>
-                          <td className="px-4 py-2 text-right">{formatNumber(item.payment)}</td>
-                          <td className="px-4 py-2 text-right">{formatNumber(item.balance)}</td>
+                          <td className="px-4 py-3">{item.month}</td>
+                          <td className="px-4 py-3 text-right">{formatNumber(item.principal)}</td>
+                          <td className="px-4 py-3 text-right">{formatNumber(item.interest)}</td>
+                          <td className="px-4 py-3 text-right">{formatNumber(item.payment)}</td>
+                          <td className="px-4 py-3 text-right">{formatNumber(item.balance)}</td>
                         </tr>
                       ))}
                     </tbody>
