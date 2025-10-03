@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react'
-import { AdSense } from '@/components/AdSense'
+import { ArrowLeft } from 'lucide-react';
+import { AdSense } from '@/components/AdSense';
 
 interface City {
   name: string;
@@ -127,24 +127,28 @@ export default function TimezoneCalculator() {
         <meta name="description" content="세계 주요 도시의 현재 시간과 시차를 확인하고 비행시간을 고려한 도착시간을 계산하세요" />
       </Head>
 
-      <div className="min-h-screen py-12 px-4">
-        <div className="max-w-4xl mx-auto">
-          {/* 헤더 */}
-          <div className="text-center mb-8">
-            <Link href="/" className="inline-block mb-4 text-purple-600 hover:text-purple-700 transition-colors">
-              ← 홈으로
-            </Link>
-            <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-              🌍 해외여행 시차 계산기
-            </h1>
-            <p className="text-gray-600">
-              세계 주요 도시의 현재 시간과 시차를 확인하세요
-            </p>
-          </div>
+      <div className="min-h-screen pb-12">
+        {/* 상단 광고 */}
+        <div className="pt-8 pb-12 flex justify-center fade-in">
+          <AdSense slot="2247902816" style={{ display: 'inline-block', width: '728px', height: '90px' }} />
+        </div>
 
-          <div className="grid md:grid-cols-2 gap-6 mb-6">
+        {/* 헤더 */}
+        <header className="page-header fade-in">
+          <Link href="/" className="back-button">
+            <ArrowLeft size={20} />
+            <span>홈으로</span>
+          </Link>
+          <h1 className="page-title">🌍 해외여행 시차 계산기</h1>
+          <p className="page-subtitle">세계 주요 도시의 현재 시간과 시차를 확인하세요</p>
+        </header>
+
+        {/* 메인 컨텐츠 */}
+        <main className="container-custom">
+
+          <div className="grid md:grid-cols-2 gap-6 mb-12 slide-up">
             {/* 서울 시간 */}
-            <div className="glass-card">
+            <div className="result-card result-card-blue">
               <div className="text-center">
                 <div className="text-sm text-gray-600 mb-2">🇰🇷 서울 (대한민국)</div>
                 <div className="text-3xl font-bold text-gray-800 mb-1">
@@ -157,7 +161,7 @@ export default function TimezoneCalculator() {
             </div>
 
             {/* 선택한 도시 시간 */}
-            <div className="glass-card">
+            <div className="result-card result-card-purple">
               <div className="text-center">
                 <div className="text-sm text-gray-600 mb-2">
                   {selectedCity.name} ({selectedCity.country})
@@ -176,17 +180,15 @@ export default function TimezoneCalculator() {
           </div>
 
           {/* 도시 선택 */}
-          <div className="glass-card mb-6">
-            <label className="block text-sm font-medium text-gray-700 mb-3">
-              도시 선택
-            </label>
+          <div className="glass-card mb-12 slide-up" style={{ animationDelay: '0.1s' }}>
+            <h2 className="text-2xl font-bold mb-6 text-gray-900">도시 선택</h2>
             <select
               value={cities.indexOf(selectedCity)}
               onChange={(e) => {
                 setSelectedCity(cities[parseInt(e.target.value)]);
                 setArrivalTime(null);
               }}
-              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              className="input-field"
             >
               {cities.map((city, index) => (
                 <option key={index} value={index}>
@@ -197,13 +199,11 @@ export default function TimezoneCalculator() {
           </div>
 
           {/* 비행시간 계산 */}
-          <div className="glass-card mb-6">
-            <h3 className="text-lg font-semibold text-gray-800 mb-4">
-              ✈️ 도착 시간 계산
-            </h3>
+          <div className="glass-card mb-12 slide-up" style={{ animationDelay: '0.2s' }}>
+            <h2 className="text-2xl font-bold mb-6 text-gray-900">✈️ 도착 시간 계산</h2>
             <div className="grid md:grid-cols-3 gap-4 mb-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
                   비행시간 (시간)
                 </label>
                 <input
@@ -212,11 +212,11 @@ export default function TimezoneCalculator() {
                   onChange={(e) => setFlightHours(e.target.value)}
                   placeholder="0"
                   min="0"
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  className="input-field"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
                   비행시간 (분)
                 </label>
                 <input
@@ -226,13 +226,13 @@ export default function TimezoneCalculator() {
                   placeholder="0"
                   min="0"
                   max="59"
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  className="input-field"
                 />
               </div>
               <div className="flex items-end">
                 <button
                   onClick={calculateArrival}
-                  className="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-3 rounded-xl font-semibold hover:shadow-lg transition-all duration-200"
+                  className="btn btn-primary w-full"
                 >
                   계산하기
                 </button>
@@ -240,9 +240,9 @@ export default function TimezoneCalculator() {
             </div>
 
             {arrivalTime && (
-              <div className="mt-4 p-4 bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl border-2 border-purple-200">
+              <div className="result-card result-card-pink mt-4">
                 <div className="text-sm text-gray-600 mb-1">현지 도착 시간</div>
-                <div className="text-2xl font-bold text-purple-600">
+                <div className="text-3xl font-bold text-pink-600">
                   {formatTime(arrivalTime)}
                 </div>
               </div>
@@ -250,7 +250,7 @@ export default function TimezoneCalculator() {
           </div>
 
           {/* 주요 도시 시간 목록 */}
-          <div className="glass-card">
+          <div className="glass-card slide-up" style={{ animationDelay: '0.3s' }}>
             <h3 className="text-lg font-semibold text-gray-800 mb-4">
               🌐 주요 도시 현재 시간
             </h3>
@@ -288,6 +288,16 @@ export default function TimezoneCalculator() {
               })}
             </div>
           </div>
+
+          {/* 중간 광고 */}
+          <div className="pt-16 pb-12">
+            <AdSense slot="2247902816" format="auto" responsive={true} />
+          </div>
+        </main>
+
+        {/* 하단 광고 */}
+        <div className="pt-16 pb-12 flex justify-center">
+          <AdSense slot="2247902816" format="auto" responsive={true} />
         </div>
       </div>
     </>

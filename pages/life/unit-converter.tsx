@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
+import { ArrowLeft } from 'lucide-react';
+import { AdSense } from '@/components/AdSense';
 
 type UnitCategory = 'length' | 'weight' | 'volume' | 'temperature';
 
@@ -114,26 +116,28 @@ export default function UnitConverter() {
         <meta name="description" content="길이, 무게, 부피, 온도 등 다양한 단위를 쉽게 변환하세요" />
       </Head>
 
-      <div className="min-h-screen py-12 px-4">
-        <div className="max-w-2xl mx-auto">
-          {/* 헤더 */}
-          <div className="text-center mb-8">
-            <Link href="/" className="inline-block mb-4 text-purple-600 hover:text-purple-700 transition-colors">
-              ← 홈으로
-            </Link>
-            <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-              단위 변환기
-            </h1>
-            <p className="text-gray-600">
-              길이, 무게, 부피, 온도 등 다양한 단위를 간편하게 변환하세요
-            </p>
-          </div>
+      <div className="min-h-screen pb-12">
+        {/* 상단 광고 */}
+        <div className="pt-8 pb-12 flex justify-center fade-in">
+          <AdSense slot="2247902816" style={{ display: 'inline-block', width: '728px', height: '90px' }} />
+        </div>
+
+        {/* 헤더 */}
+        <header className="page-header fade-in">
+          <Link href="/" className="back-button">
+            <ArrowLeft size={20} />
+            <span>홈으로</span>
+          </Link>
+          <h1 className="page-title">📏 단위 변환기</h1>
+          <p className="page-subtitle">길이, 무게, 부피, 온도 등 다양한 단위를 간편하게 변환하세요</p>
+        </header>
+
+        {/* 메인 컨텐츠 */}
+        <main className="container-custom">
 
           {/* 카테고리 선택 */}
-          <div className="glass-card mb-6">
-            <label className="block text-sm font-medium text-gray-700 mb-3">
-              변환 유형
-            </label>
+          <div className="glass-card mb-12 slide-up">
+            <h2 className="text-2xl font-bold mb-6 text-gray-900">변환 유형</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               {(Object.keys(categoryNames) as UnitCategory[]).map((cat) => (
                 <button
@@ -152,17 +156,17 @@ export default function UnitConverter() {
           </div>
 
           {/* 변환 입력 */}
-          <div className="glass-card mb-6">
+          <div className="glass-card mb-12 slide-up" style={{ animationDelay: '0.1s' }}>
             <div className="grid md:grid-cols-2 gap-6">
               {/* From */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
                   변환할 단위
                 </label>
                 <select
                   value={fromUnit}
                   onChange={(e) => setFromUnit(e.target.value)}
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent mb-3"
+                  className="input-field mb-3"
                 >
                   {Object.entries(conversions[category]).map(([key, { name }]) => (
                     <option key={key} value={key}>
@@ -178,19 +182,19 @@ export default function UnitConverter() {
                     setResult(null);
                   }}
                   placeholder="값을 입력하세요"
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  className="input-field"
                 />
               </div>
 
               {/* To */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
                   변환될 단위
                 </label>
                 <select
                   value={toUnit}
                   onChange={(e) => setToUnit(e.target.value)}
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent mb-3"
+                  className="input-field mb-3"
                 >
                   {Object.entries(conversions[category]).map(([key, { name }]) => (
                     <option key={key} value={key}>
@@ -199,8 +203,9 @@ export default function UnitConverter() {
                   ))}
                 </select>
                 {result !== null && (
-                  <div className="w-full px-4 py-3 bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl border-2 border-purple-200">
-                    <div className="text-2xl font-bold text-purple-600">
+                  <div className="result-card result-card-purple">
+                    <div className="text-sm text-gray-600 mb-1">변환 결과</div>
+                    <div className="text-3xl font-bold text-purple-600">
                       {formatNumber(result)}
                     </div>
                   </div>
@@ -211,14 +216,14 @@ export default function UnitConverter() {
             {/* 변환 버튼 */}
             <button
               onClick={handleConvert}
-              className="w-full mt-6 bg-gradient-to-r from-purple-600 to-pink-600 text-white py-4 rounded-xl font-semibold hover:shadow-lg transition-all duration-200 hover:scale-[1.02]"
+              className="btn btn-primary w-full mt-6"
             >
               변환하기
             </button>
           </div>
 
           {/* 자주 사용하는 변환 예시 */}
-          <div className="glass-card">
+          <div className="glass-card slide-up" style={{ animationDelay: '0.2s' }}>
             <h3 className="text-lg font-semibold text-gray-800 mb-4">
               💡 자주 사용하는 변환
             </h3>
@@ -253,6 +258,16 @@ export default function UnitConverter() {
               )}
             </div>
           </div>
+
+          {/* 중간 광고 */}
+          <div className="pt-16 pb-12">
+            <AdSense slot="2247902816" format="auto" responsive={true} />
+          </div>
+        </main>
+
+        {/* 하단 광고 */}
+        <div className="pt-16 pb-12 flex justify-center">
+          <AdSense slot="2247902816" format="auto" responsive={true} />
         </div>
       </div>
     </>
