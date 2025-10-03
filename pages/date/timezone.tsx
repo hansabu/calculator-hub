@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
+import { ArrowLeft } from 'lucide-react'
+import { AdSense } from '@/components/AdSense'
 
 interface City {
   name: string;
