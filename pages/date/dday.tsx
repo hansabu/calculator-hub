@@ -58,20 +58,20 @@ export default function DdayCalculator() {
         </div>
 
         {/* 뒤로가기 */}
-        <Link href="/" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 mb-4">
+        <Link href="/" className="inline-flex items-center gap-2 text-white hover:text-white/80 mb-6 bg-white/10 px-4 py-2 rounded-lg backdrop-blur transition-all">
           <ArrowLeft className="w-5 h-5" />
           메인으로
         </Link>
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           <div className="lg:col-span-3">
-            <h1 className="text-3xl font-bold mb-6 flex items-center gap-2">
+            <h1 className="text-3xl font-bold mb-6 flex items-center gap-3 text-white drop-shadow-lg">
               <Calculator className="w-8 h-8" />
               D-Day 계산기
             </h1>
 
             {/* 입력 폼 */}
-            <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+            <div className="bg-white/95 backdrop-blur rounded-xl shadow-xl p-6 mb-6 border border-white/20">
               <div className="mb-6">
                 <label className="block text-sm font-medium mb-2">목표 날짜</label>
                 <input
@@ -81,23 +81,23 @@ export default function DdayCalculator() {
                     setTargetDate(e.target.value)
                     setIsLive(false)
                   }}
-                  className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full p-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <button
                   onClick={handleCalculate}
-                  className="bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold"
+                  className="gradient-button text-white py-3 rounded-lg font-semibold shadow-lg"
                 >
                   계산하기
                 </button>
                 <button
                   onClick={handleStartLive}
-                  className={`py-3 rounded-lg font-semibold transition-colors ${
+                  className={`py-3 rounded-lg font-semibold shadow-lg transition-all ${
                     isLive
-                      ? 'bg-red-600 text-white hover:bg-red-700'
-                      : 'bg-green-600 text-white hover:bg-green-700'
+                      ? 'bg-gradient-to-r from-red-500 to-red-600 text-white hover:from-red-600 hover:to-red-700'
+                      : 'bg-gradient-to-r from-green-500 to-green-600 text-white hover:from-green-600 hover:to-green-700'
                   }`}
                 >
                   {isLive ? '실시간 중지' : '실시간 시작'}
@@ -107,11 +107,11 @@ export default function DdayCalculator() {
 
             {/* 결과 표시 */}
             {result && (
-              <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+              <div className="result-card bg-white/95 backdrop-blur rounded-xl shadow-xl p-6 mb-6 border border-white/20">
                 <h2 className="text-2xl font-bold mb-4">계산 결과</h2>
 
                 <div className="mb-6">
-                  <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-lg text-center">
+                  <div className="bg-gradient-to-r from-blue-500/20 to-purple-500/20 p-6 rounded-xl text-center border border-purple-200">
                     <div className="text-sm text-gray-600 mb-2">
                       {result.isPast ? '경과한 날' : '남은 날'}
                     </div>
@@ -125,21 +125,21 @@ export default function DdayCalculator() {
                 </div>
 
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  <div className="bg-blue-50 p-4 rounded-lg text-center">
-                    <div className="text-sm text-gray-600 mb-1">일</div>
-                    <div className="text-3xl font-bold text-blue-600">{formatNumber(result.days)}</div>
+                  <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-4 rounded-xl shadow-lg text-center">
+                    <div className="text-sm text-white/90 mb-1">일</div>
+                    <div className="text-3xl font-bold text-white">{formatNumber(result.days)}</div>
                   </div>
-                  <div className="bg-green-50 p-4 rounded-lg text-center">
-                    <div className="text-sm text-gray-600 mb-1">시간</div>
-                    <div className="text-3xl font-bold text-green-600">{formatNumber(result.hours)}</div>
+                  <div className="bg-gradient-to-br from-green-500 to-green-600 p-4 rounded-xl shadow-lg text-center">
+                    <div className="text-sm text-white/90 mb-1">시간</div>
+                    <div className="text-3xl font-bold text-white">{formatNumber(result.hours)}</div>
                   </div>
-                  <div className="bg-purple-50 p-4 rounded-lg text-center">
-                    <div className="text-sm text-gray-600 mb-1">분</div>
-                    <div className="text-3xl font-bold text-purple-600">{formatNumber(result.minutes)}</div>
+                  <div className="bg-gradient-to-br from-purple-500 to-purple-600 p-4 rounded-xl shadow-lg text-center">
+                    <div className="text-sm text-white/90 mb-1">분</div>
+                    <div className="text-3xl font-bold text-white">{formatNumber(result.minutes)}</div>
                   </div>
-                  <div className="bg-orange-50 p-4 rounded-lg text-center">
-                    <div className="text-sm text-gray-600 mb-1">초</div>
-                    <div className="text-3xl font-bold text-orange-600">{formatNumber(result.seconds)}</div>
+                  <div className="bg-gradient-to-br from-orange-500 to-orange-600 p-4 rounded-xl shadow-lg text-center">
+                    <div className="text-sm text-white/90 mb-1">초</div>
+                    <div className="text-3xl font-bold text-white">{formatNumber(result.seconds)}</div>
                   </div>
                 </div>
 

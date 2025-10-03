@@ -54,25 +54,25 @@ export default function SavingsCalculator() {
           />
         </div>
 
-        <Link href="/" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 mb-4">
+        <Link href="/" className="inline-flex items-center gap-2 text-white hover:text-white/80 mb-6 bg-white/10 px-4 py-2 rounded-lg backdrop-blur transition-all">
           <ArrowLeft className="w-5 h-5" />
           메인으로
         </Link>
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           <div className="lg:col-span-3">
-            <h1 className="text-3xl font-bold mb-6 flex items-center gap-2">
+            <h1 className="text-3xl font-bold mb-6 flex items-center gap-3 text-white drop-shadow-lg">
               <Calculator className="w-8 h-8" />
               적금 계산기
             </h1>
 
-            <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+            <div className="bg-white/95 backdrop-blur rounded-xl shadow-xl p-6 mb-6 border border-white/20">
               <div className="mb-4">
                 <label className="block text-sm font-medium mb-2">이자 계산 방식</label>
                 <select
                   value={interestType}
                   onChange={(e) => setInterestType(e.target.value as InterestType)}
-                  className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full p-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
                 >
                   <option value="compound">복리</option>
                   <option value="simple">단리</option>
@@ -85,7 +85,7 @@ export default function SavingsCalculator() {
                   type="number"
                   value={monthlyDeposit}
                   onChange={(e) => setMonthlyDeposit(e.target.value)}
-                  className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full p-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
                   placeholder="예: 500000"
                 />
               </div>
@@ -96,7 +96,7 @@ export default function SavingsCalculator() {
                   type="number"
                   value={months}
                   onChange={(e) => setMonths(e.target.value)}
-                  className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full p-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
                   placeholder="예: 12"
                 />
               </div>
@@ -108,35 +108,35 @@ export default function SavingsCalculator() {
                   step="0.01"
                   value={annualRate}
                   onChange={(e) => setAnnualRate(e.target.value)}
-                  className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full p-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
                   placeholder="예: 3.5"
                 />
               </div>
 
               <button
                 onClick={handleCalculate}
-                className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold"
+                className="w-full gradient-button text-white py-3 rounded-lg font-semibold shadow-lg"
               >
                 계산하기
               </button>
             </div>
 
             {result && (
-              <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+              <div className="result-card bg-white/95 backdrop-blur rounded-xl shadow-xl p-6 mb-6 border border-white/20">
                 <h2 className="text-2xl font-bold mb-4">계산 결과</h2>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                  <div className="bg-blue-50 p-4 rounded-lg">
-                    <div className="text-sm text-gray-600 mb-1">총 납입액</div>
-                    <div className="text-2xl font-bold text-blue-600">{formatNumber(result.totalDeposit)}원</div>
+                  <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-4 rounded-xl shadow-lg">
+                    <div className="text-sm text-white/90 mb-1">총 납입액</div>
+                    <div className="text-2xl font-bold text-white">{formatNumber(result.totalDeposit)}원</div>
                   </div>
-                  <div className="bg-green-50 p-4 rounded-lg">
-                    <div className="text-sm text-gray-600 mb-1">총 이자</div>
-                    <div className="text-2xl font-bold text-green-600">{formatNumber(result.totalInterest)}원</div>
+                  <div className="bg-gradient-to-br from-green-500 to-green-600 p-4 rounded-xl shadow-lg">
+                    <div className="text-sm text-white/90 mb-1">총 이자</div>
+                    <div className="text-2xl font-bold text-white">{formatNumber(result.totalInterest)}원</div>
                   </div>
-                  <div className="bg-purple-50 p-4 rounded-lg">
-                    <div className="text-sm text-gray-600 mb-1">만기 금액</div>
-                    <div className="text-2xl font-bold text-purple-600">{formatNumber(result.finalAmount)}원</div>
+                  <div className="bg-gradient-to-br from-purple-500 to-purple-600 p-4 rounded-xl shadow-lg">
+                    <div className="text-sm text-white/90 mb-1">만기 금액</div>
+                    <div className="text-2xl font-bold text-white">{formatNumber(result.finalAmount)}원</div>
                   </div>
                 </div>
 

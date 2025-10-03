@@ -49,27 +49,27 @@ export default function DiscountCalculator() {
         </div>
 
         {/* 뒤로가기 */}
-        <Link href="/" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 mb-4">
+        <Link href="/" className="inline-flex items-center gap-2 text-white hover:text-white/80 mb-6 bg-white/10 px-4 py-2 rounded-lg backdrop-blur transition-all">
           <ArrowLeft className="w-5 h-5" />
           메인으로
         </Link>
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           <div className="lg:col-span-3">
-            <h1 className="text-3xl font-bold mb-6 flex items-center gap-2">
+            <h1 className="text-3xl font-bold mb-6 flex items-center gap-3 text-white drop-shadow-lg">
               <Calculator className="w-8 h-8" />
               할인 계산기
             </h1>
 
             {/* 입력 폼 */}
-            <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+            <div className="bg-white/95 backdrop-blur rounded-xl shadow-xl p-6 mb-6 border border-white/20">
               <div className="mb-4">
                 <label className="block text-sm font-medium mb-2">원가 (원)</label>
                 <input
                   type="number"
                   value={originalPrice}
                   onChange={(e) => setOriginalPrice(e.target.value)}
-                  className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full p-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
                   placeholder="예: 100000"
                 />
               </div>
@@ -81,7 +81,7 @@ export default function DiscountCalculator() {
                   step="0.1"
                   value={discount1}
                   onChange={(e) => setDiscount1(e.target.value)}
-                  className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full p-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
                   placeholder="예: 20"
                 />
               </div>
@@ -93,14 +93,14 @@ export default function DiscountCalculator() {
                   step="0.1"
                   value={discount2}
                   onChange={(e) => setDiscount2(e.target.value)}
-                  className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full p-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
                   placeholder="예: 10"
                 />
               </div>
 
               <button
                 onClick={handleCalculate}
-                className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold"
+                className="w-full gradient-button text-white py-3 rounded-lg font-semibold shadow-lg"
               >
                 계산하기
               </button>
@@ -108,21 +108,21 @@ export default function DiscountCalculator() {
 
             {/* 결과 표시 */}
             {result && (
-              <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+              <div className="result-card bg-white/95 backdrop-blur rounded-xl shadow-xl p-6 mb-6 border border-white/20">
                 <h2 className="text-2xl font-bold mb-4">계산 결과</h2>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                  <div className="bg-blue-50 p-4 rounded-lg">
-                    <div className="text-sm text-gray-600 mb-1">최종 가격</div>
-                    <div className="text-2xl font-bold text-blue-600">{formatNumber(result.finalPrice)}원</div>
+                  <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-4 rounded-xl shadow-lg">
+                    <div className="text-sm text-white/90 mb-1">최종 가격</div>
+                    <div className="text-2xl font-bold text-white">{formatNumber(result.finalPrice)}원</div>
                   </div>
-                  <div className="bg-red-50 p-4 rounded-lg">
-                    <div className="text-sm text-gray-600 mb-1">할인 금액</div>
-                    <div className="text-2xl font-bold text-red-600">{formatNumber(result.totalDiscount)}원</div>
+                  <div className="bg-gradient-to-br from-red-500 to-red-600 p-4 rounded-xl shadow-lg">
+                    <div className="text-sm text-white/90 mb-1">할인 금액</div>
+                    <div className="text-2xl font-bold text-white">{formatNumber(result.totalDiscount)}원</div>
                   </div>
-                  <div className="bg-green-50 p-4 rounded-lg">
-                    <div className="text-sm text-gray-600 mb-1">총 할인율</div>
-                    <div className="text-2xl font-bold text-green-600">{result.totalDiscountRate.toFixed(1)}%</div>
+                  <div className="bg-gradient-to-br from-green-500 to-green-600 p-4 rounded-xl shadow-lg">
+                    <div className="text-sm text-white/90 mb-1">총 할인율</div>
+                    <div className="text-2xl font-bold text-white">{result.totalDiscountRate.toFixed(1)}%</div>
                   </div>
                 </div>
 

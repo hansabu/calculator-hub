@@ -53,26 +53,26 @@ export default function CalorieCalculator() {
         </div>
 
         {/* 뒤로가기 */}
-        <Link href="/" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 mb-4">
+        <Link href="/" className="inline-flex items-center gap-2 text-white hover:text-white/80 mb-6 bg-white/10 px-4 py-2 rounded-lg backdrop-blur transition-all">
           <ArrowLeft className="w-5 h-5" />
           메인으로
         </Link>
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           <div className="lg:col-span-3">
-            <h1 className="text-3xl font-bold mb-6 flex items-center gap-2">
+            <h1 className="text-3xl font-bold mb-6 flex items-center gap-3 text-white drop-shadow-lg">
               <Calculator className="w-8 h-8" />
               칼로리 계산기
             </h1>
 
             {/* 입력 폼 */}
-            <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+            <div className="bg-white/95 backdrop-blur rounded-xl shadow-xl p-6 mb-6 border border-white/20">
               <div className="mb-4">
                 <label className="block text-sm font-medium mb-2">성별</label>
                 <select
                   value={gender}
                   onChange={(e) => setGender(e.target.value as 'male' | 'female')}
-                  className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full p-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
                 >
                   <option value="male">남성</option>
                   <option value="female">여성</option>
@@ -85,7 +85,7 @@ export default function CalorieCalculator() {
                   type="number"
                   value={age}
                   onChange={(e) => setAge(e.target.value)}
-                  className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full p-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
                   placeholder="예: 30"
                 />
               </div>
@@ -97,7 +97,7 @@ export default function CalorieCalculator() {
                   step="0.1"
                   value={height}
                   onChange={(e) => setHeight(e.target.value)}
-                  className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full p-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
                   placeholder="예: 170"
                 />
               </div>
@@ -109,7 +109,7 @@ export default function CalorieCalculator() {
                   step="0.1"
                   value={weight}
                   onChange={(e) => setWeight(e.target.value)}
-                  className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full p-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
                   placeholder="예: 65"
                 />
               </div>
@@ -119,7 +119,7 @@ export default function CalorieCalculator() {
                 <select
                   value={activityLevel}
                   onChange={(e) => setActivityLevel(e.target.value)}
-                  className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full p-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
                 >
                   <option value="1.2">거의 활동 없음 (주로 앉아있음)</option>
                   <option value="1.375">가벼운 활동 (주 1-3회 운동)</option>
@@ -131,7 +131,7 @@ export default function CalorieCalculator() {
 
               <button
                 onClick={handleCalculate}
-                className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold"
+                className="w-full gradient-button text-white py-3 rounded-lg font-semibold shadow-lg"
               >
                 계산하기
               </button>
@@ -139,21 +139,21 @@ export default function CalorieCalculator() {
 
             {/* 결과 표시 */}
             {result && (
-              <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+              <div className="result-card bg-white/95 backdrop-blur rounded-xl shadow-xl p-6 mb-6 border border-white/20">
                 <h2 className="text-2xl font-bold mb-4">계산 결과</h2>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                  <div className="bg-blue-50 p-4 rounded-lg">
-                    <div className="text-sm text-gray-600 mb-1">기초대사량</div>
-                    <div className="text-2xl font-bold text-blue-600">{formatNumber(result.bmr)} kcal</div>
+                  <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-4 rounded-xl shadow-lg">
+                    <div className="text-sm text-white/90 mb-1">기초대사량</div>
+                    <div className="text-2xl font-bold text-white">{formatNumber(result.bmr)} kcal</div>
                   </div>
-                  <div className="bg-green-50 p-4 rounded-lg">
-                    <div className="text-sm text-gray-600 mb-1">활동대사량</div>
-                    <div className="text-2xl font-bold text-green-600">{formatNumber(result.tdee)} kcal</div>
+                  <div className="bg-gradient-to-br from-green-500 to-green-600 p-4 rounded-xl shadow-lg">
+                    <div className="text-sm text-white/90 mb-1">활동대사량</div>
+                    <div className="text-2xl font-bold text-white">{formatNumber(result.tdee)} kcal</div>
                   </div>
-                  <div className="bg-purple-50 p-4 rounded-lg">
-                    <div className="text-sm text-gray-600 mb-1">권장 칼로리</div>
-                    <div className="text-2xl font-bold text-purple-600">{formatNumber(result.recommendedCalorie)} kcal</div>
+                  <div className="bg-gradient-to-br from-purple-500 to-purple-600 p-4 rounded-xl shadow-lg">
+                    <div className="text-sm text-white/90 mb-1">권장 칼로리</div>
+                    <div className="text-2xl font-bold text-white">{formatNumber(result.recommendedCalorie)} kcal</div>
                   </div>
                 </div>
 

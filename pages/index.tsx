@@ -60,17 +60,19 @@ export default function Home() {
         </div>
 
         {/* 헤더 */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold mb-4">생활 계산기 허브</h1>
-          <p className="text-lg text-gray-600 mb-6">일상에 필요한 모든 계산기를 한곳에서</p>
+        <div className="text-center mb-12">
+          <h1 className="text-5xl font-extrabold mb-4 text-white drop-shadow-lg">
+            생활 계산기 허브
+          </h1>
+          <p className="text-xl text-white/90 mb-8 drop-shadow">일상에 필요한 모든 계산기를 한곳에서</p>
 
           {/* 검색창 */}
           <div className="max-w-md mx-auto relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
             <input
               type="text"
               placeholder="계산기 검색..."
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full pl-12 pr-4 py-3 bg-white/95 backdrop-blur border-0 rounded-xl shadow-lg focus:outline-none focus:ring-2 focus:ring-white/50 transition-all"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
@@ -81,20 +83,24 @@ export default function Home() {
           <div className="lg:col-span-3">
             {/* 카테고리별 계산기 */}
             {categories.map((category, idx) => (
-              <div key={idx} className="mb-8">
-                <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
-                  {category.icon}
+              <div key={idx} className="mb-10">
+                <h2 className="text-2xl font-bold mb-6 flex items-center gap-3 text-white drop-shadow">
+                  <div className="bg-white/20 p-2 rounded-lg backdrop-blur">
+                    {category.icon}
+                  </div>
                   {category.title}
                 </h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {category.calculators.map((calc, calcIdx) => (
                     <Link key={calcIdx} href={calc.href}>
-                      <div className="border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow cursor-pointer bg-white">
-                        <h3 className="text-xl font-semibold flex items-center gap-2 mb-2">
-                          <Calculator className="w-5 h-5" />
+                      <div className="calculator-card bg-white/95 backdrop-blur rounded-xl p-6 cursor-pointer border border-white/20 shadow-xl">
+                        <h3 className="text-xl font-bold flex items-center gap-3 mb-3 text-gray-800">
+                          <div className="bg-gradient-to-br from-purple-500 to-indigo-600 p-2 rounded-lg">
+                            <Calculator className="w-5 h-5 text-white" />
+                          </div>
                           {calc.name}
                         </h3>
-                        <p className="text-gray-600">{calc.desc}</p>
+                        <p className="text-gray-600 leading-relaxed">{calc.desc}</p>
                       </div>
                     </Link>
                   ))}
