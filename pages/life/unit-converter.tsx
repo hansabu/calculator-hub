@@ -143,7 +143,7 @@ export default function UnitConverter() {
                 <button
                   key={cat}
                   onClick={() => handleCategoryChange(cat)}
-                  className={`px-4 py-6 rounded-xl font-semibold text-xl transition-all ${
+                  className={`px-4 py-6 rounded-xl font-bold text-6xl transition-all ${
                     category === cat
                       ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg'
                       : 'bg-white border-2 border-gray-200 text-gray-700 hover:border-purple-300'
@@ -157,7 +157,7 @@ export default function UnitConverter() {
 
           {/* 변환 입력 */}
           <div className="glass-card mb-12 slide-up" style={{ animationDelay: '0.1s' }}>
-            <div className="grid md:grid-cols-2 gap-12">
+            <div className="grid md:grid-cols-2 gap-20 relative">
               {/* From */}
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
@@ -185,6 +185,9 @@ export default function UnitConverter() {
                   className="input-field"
                 />
               </div>
+
+              {/* 구분선 */}
+              <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-gray-300 to-transparent transform -translate-x-1/2"></div>
 
               {/* To */}
               <div>
