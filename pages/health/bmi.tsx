@@ -1,27 +1,29 @@
-import { useState } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
+import { useState } from 'react'
 import { AdSense } from '@/components/AdSense'
 import { calculateBMI, BMIResult } from '@/lib/calculators/health/bmi'
 
 export default function BMICalculator() {
-  const [height, setHeight] = useState('')
-  const [weight, setWeight] = useState('')
+  const [inputs, setInputs] = useState({
+    height: '',
+    weight: ''
+  })
   const [result, setResult] = useState<BMIResult | null>(null)
 
   const handleCalculate = () => {
-    const input = {
-      height: parseFloat(height),
-      weight: parseFloat(weight)
+    const parsedInput = {
+      height: parseFloat(inputs.height),
+      weight: parseFloat(inputs.weight)
     }
 
-    if (isNaN(input.height) || isNaN(input.weight)) {
+    if (isNaN(parsedInput.height) || isNaN(parsedInput.weight)) {
       alert('모든 값을 올바르게 입력해주세요')
       return
     }
 
-    const calculatedResult = calculateBMI(input)
+    const calculatedResult = calculateBMI(parsedInput)
     setResult(calculatedResult)
   }
 
@@ -32,46 +34,31 @@ export default function BMICalculator() {
   return (
     <>
       <Head>
-        <title>BMI 계산기 - 체질량지수 계산</title>
+        <title>BMI 계산기 - 생활 계산기 허브</title>
         <meta name="description" content="키와 체중을 입력하여 BMI(체질량지수)를 계산하고 비만도를 확인해보세요." />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
-      <div className="min-h-screen">
+      <div className="min-h-screen pb-12">
         {/* 상단 광고 */}
         <div className="py-6 flex justify-center fade-in">
-          <AdSense
-            slot="2247902816"
-            style={{ display: 'inline-block', width: '728px', height: '90px' }}
-          />
+          <AdSense slot="2247902816" style={{ display: 'inline-block', width: '728px', height: '90px' }} />
         </div>
 
-        {/* 뒤로가기 버튼 */}
-        <div className="container mx-auto px-4 max-w-5xl">
-          <Link href="/" className="inline-flex items-center gap-2 text-white hover:text-white/80 mb-6 px-4 py-2 bg-white/10 rounded-lg backdrop-blur-sm transition-all">
-            <ArrowLeft className="w-5 h-5" />
-            <span>메인으로</span>
+        {/* 헤더 */}
+        <header className="page-header fade-in">
+          <Link href="/" className="back-button">
+            <ArrowLeft size={20} />
+            <span>홈으로</span>
           </Link>
-        </div>
+          <h1 className="page-title">⚖️ BMI 계산기</h1>
+          <p className="page-subtitle">체질량지수(BMI)를 계산하고 비만도를 확인해보세요</p>
+        </header>
 
         {/* 메인 컨텐츠 */}
-        <main className="container mx-auto px-4 pb-16 max-w-5xl">
-          {/* 페이지 헤더 */}
-          <header className="text-center mb-12 fade-in">
-            <div className="inline-flex items-center gap-3 mb-4">
-              <span className="text-5xl">⚖️</span>
-              <h1 className="text-4xl md:text-5xl font-bold text-white drop-shadow-lg">
-                BMI 계산기
-              </h1>
-            </div>
-            <p className="text-lg text-white/80 drop-shadow">
-              체질량지수(BMI)를 계산하고 비만도를 확인해보세요
-            </p>
-          </header>
-
-          {/* 입력 폼 카드 */}
-          <div className="glass-effect rounded-2xl p-8 mb-8 slide-up">
-            <h2 className="text-2xl font-bold text-gray-800 mb-6">계산 정보 입력</h2>
+        <main className="container-custom">
+          {/* 입력 카드 */}
+          <div className="glass-card mb-8 slide-up">
+            <h2 className="text-2xl font-bold mb-6 text-gray-900">입력 정보</h2>
 
             <div className="space-y-4">
               <div>
@@ -79,8 +66,8 @@ export default function BMICalculator() {
                 <input
                   type="number"
                   step="0.1"
-                  value={height}
-                  onChange={(e) => setHeight(e.target.value)}
+                  value={inputs.height}
+                  onChange={(e) => setInputs({...inputs, height: e.target.value})}
                   className="input-field"
                   placeholder="예: 170"
                 />
@@ -91,39 +78,37 @@ export default function BMICalculator() {
                 <input
                   type="number"
                   step="0.1"
-                  value={weight}
-                  onChange={(e) => setWeight(e.target.value)}
+                  value={inputs.weight}
+                  onChange={(e) => setInputs({...inputs, weight: e.target.value})}
                   className="input-field"
                   placeholder="예: 65"
                 />
               </div>
             </div>
 
-            <button
-              onClick={handleCalculate}
-              className="btn-primary w-full mt-6"
-            >
+            {/* 계산 버튼 */}
+            <button onClick={handleCalculate} className="btn btn-primary w-full mt-6">
               계산하기
             </button>
           </div>
 
           {/* 결과 카드 */}
           {result && (
-            <div className="result-card glass-effect rounded-2xl p-8 mb-8">
-              <h2 className="text-2xl font-bold text-gray-800 mb-6">계산 결과</h2>
-
+            <div className="slide-up" style={{ animationDelay: '0.1s' }}>
+              <h2 className="text-2xl font-bold mb-6 text-white">계산 결과</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-                <div className="stat-card" style={{"--card-from": "#3b82f6", "--card-to": "#2563eb"} as React.CSSProperties}>
-                  <div className="text-sm opacity-90 mb-1">BMI 지수</div>
-                  <div className="text-4xl font-bold">{formatNumber(result.bmi)}</div>
+                <div className="result-card result-card-blue">
+                  <div className="text-sm text-gray-600 mb-1">BMI 지수</div>
+                  <div className="text-4xl font-bold text-blue-600">{formatNumber(result.bmi)}</div>
                 </div>
-                <div className="stat-card" style={{"--card-from": "#8b5cf6", "--card-to": "#7c3aed"} as React.CSSProperties}>
-                  <div className="text-sm opacity-90 mb-1">비만도</div>
-                  <div className="text-4xl font-bold">{result.category}</div>
+                <div className="result-card result-card-purple">
+                  <div className="text-sm text-gray-600 mb-1">비만도</div>
+                  <div className="text-4xl font-bold text-purple-600">{result.category}</div>
                 </div>
               </div>
 
-              <div className="bg-gray-50 p-6 rounded-lg">
+              {/* BMI 기준표 */}
+              <div className="glass-card">
                 <h3 className="font-semibold mb-4 text-gray-800">BMI 기준표</h3>
                 <div className="space-y-3 text-sm">
                   <div className="flex justify-between items-center py-2 border-b border-gray-200">
@@ -152,27 +137,15 @@ export default function BMICalculator() {
           )}
 
           {/* 중간 광고 */}
-          <div className="my-12 flex justify-center">
-            <AdSense
-              slot="6343344230"
-              format="auto"
-              responsive={true}
-            />
+          <div className="py-12">
+            <AdSense slot="2247902816" format="auto" responsive={true} />
           </div>
         </main>
 
-        {/* 하단 모바일 광고 */}
-        <div className="py-8 flex justify-center lg:hidden">
-          <AdSense
-            slot="8263255594"
-            style={{ display: 'inline-block', width: '320px', height: '100px' }}
-          />
+        {/* 하단 광고 */}
+        <div className="py-12 flex justify-center">
+          <AdSense slot="2247902816" format="auto" responsive={true} />
         </div>
-
-        {/* 푸터 */}
-        <footer className="text-center py-8 text-white/60 text-sm">
-          <p>© 2025 생활 계산기 허브. All rights reserved.</p>
-        </footer>
       </div>
     </>
   )

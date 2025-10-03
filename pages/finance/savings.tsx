@@ -1,35 +1,37 @@
-import { useState } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
+import { useState } from 'react'
 import { AdSense } from '@/components/AdSense'
 import { calculateSimpleInterest, calculateCompoundInterest, SavingsResult } from '@/lib/calculators/finance/savings'
 
 type InterestType = 'simple' | 'compound'
 
 export default function SavingsCalculator() {
-  const [interestType, setInterestType] = useState<InterestType>('compound')
-  const [monthlyDeposit, setMonthlyDeposit] = useState('')
-  const [months, setMonths] = useState('')
-  const [annualRate, setAnnualRate] = useState('')
+  const [inputs, setInputs] = useState({
+    interestType: 'compound' as InterestType,
+    monthlyDeposit: '',
+    months: '',
+    annualRate: ''
+  })
   const [result, setResult] = useState<SavingsResult | null>(null)
 
   const handleCalculate = () => {
-    const input = {
-      monthlyDeposit: parseFloat(monthlyDeposit),
-      months: parseInt(months),
-      annualRate: parseFloat(annualRate),
-      interestType
+    const parsedInput = {
+      monthlyDeposit: parseFloat(inputs.monthlyDeposit),
+      months: parseInt(inputs.months),
+      annualRate: parseFloat(inputs.annualRate),
+      interestType: inputs.interestType
     }
 
-    if (isNaN(input.monthlyDeposit) || isNaN(input.months) || isNaN(input.annualRate)) {
+    if (isNaN(parsedInput.monthlyDeposit) || isNaN(parsedInput.months) || isNaN(parsedInput.annualRate)) {
       alert('모든 값을 올바르게 입력해주세요')
       return
     }
 
-    const calculatedResult = interestType === 'simple'
-      ? calculateSimpleInterest(input)
-      : calculateCompoundInterest(input)
+    const calculatedResult = inputs.interestType === 'simple'
+      ? calculateSimpleInterest(parsedInput)
+      : calculateCompoundInterest(parsedInput)
 
     setResult(calculatedResult)
   }
@@ -41,53 +43,38 @@ export default function SavingsCalculator() {
   return (
     <>
       <Head>
-        <title>적금 계산기 - 단리/복리 적금 계산</title>
+        <title>적금 계산기 - 생활 계산기 허브</title>
         <meta name="description" content="단리와 복리 적금의 만기 금액을 계산해보세요. 월 납입액과 이율에 따른 이자를 비교할 수 있습니다." />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
-      <div className="min-h-screen">
+      <div className="min-h-screen pb-12">
         {/* 상단 광고 */}
         <div className="py-6 flex justify-center fade-in">
-          <AdSense
-            slot="2247902816"
-            style={{ display: 'inline-block', width: '728px', height: '90px' }}
-          />
+          <AdSense slot="2247902816" style={{ display: 'inline-block', width: '728px', height: '90px' }} />
         </div>
 
-        {/* 뒤로가기 버튼 */}
-        <div className="container mx-auto px-4 max-w-5xl">
-          <Link href="/" className="inline-flex items-center gap-2 text-white hover:text-white/80 mb-6 px-4 py-2 bg-white/10 rounded-lg backdrop-blur-sm transition-all">
-            <ArrowLeft className="w-5 h-5" />
-            <span>메인으로</span>
+        {/* 헤더 */}
+        <header className="page-header fade-in">
+          <Link href="/" className="back-button">
+            <ArrowLeft size={20} />
+            <span>홈으로</span>
           </Link>
-        </div>
+          <h1 className="page-title">💸 적금 계산기</h1>
+          <p className="page-subtitle">단리와 복리 적금의 만기 금액을 계산해보세요</p>
+        </header>
 
         {/* 메인 컨텐츠 */}
-        <main className="container mx-auto px-4 pb-16 max-w-5xl">
-          {/* 페이지 헤더 */}
-          <header className="text-center mb-12 fade-in">
-            <div className="inline-flex items-center gap-3 mb-4">
-              <span className="text-5xl">💸</span>
-              <h1 className="text-4xl md:text-5xl font-bold text-white drop-shadow-lg">
-                적금 계산기
-              </h1>
-            </div>
-            <p className="text-lg text-white/80 drop-shadow">
-              단리와 복리 적금의 만기 금액을 계산해보세요
-            </p>
-          </header>
-
-          {/* 입력 폼 카드 */}
-          <div className="glass-effect rounded-2xl p-8 mb-8 slide-up">
-            <h2 className="text-2xl font-bold text-gray-800 mb-6">계산 정보 입력</h2>
+        <main className="container-custom">
+          {/* 입력 카드 */}
+          <div className="glass-card mb-8 slide-up">
+            <h2 className="text-2xl font-bold mb-6 text-gray-900">입력 정보</h2>
 
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">이자 계산 방식</label>
                 <select
-                  value={interestType}
-                  onChange={(e) => setInterestType(e.target.value as InterestType)}
+                  value={inputs.interestType}
+                  onChange={(e) => setInputs({...inputs, interestType: e.target.value as InterestType})}
                   className="input-field"
                 >
                   <option value="compound">복리</option>
@@ -99,8 +86,8 @@ export default function SavingsCalculator() {
                 <label className="block text-sm font-semibold text-gray-700 mb-2">월 납입액 (원)</label>
                 <input
                   type="number"
-                  value={monthlyDeposit}
-                  onChange={(e) => setMonthlyDeposit(e.target.value)}
+                  value={inputs.monthlyDeposit}
+                  onChange={(e) => setInputs({...inputs, monthlyDeposit: e.target.value})}
                   className="input-field"
                   placeholder="예: 500000"
                 />
@@ -110,8 +97,8 @@ export default function SavingsCalculator() {
                 <label className="block text-sm font-semibold text-gray-700 mb-2">가입 개월수</label>
                 <input
                   type="number"
-                  value={months}
-                  onChange={(e) => setMonths(e.target.value)}
+                  value={inputs.months}
+                  onChange={(e) => setInputs({...inputs, months: e.target.value})}
                   className="input-field"
                   placeholder="예: 12"
                 />
@@ -122,95 +109,83 @@ export default function SavingsCalculator() {
                 <input
                   type="number"
                   step="0.01"
-                  value={annualRate}
-                  onChange={(e) => setAnnualRate(e.target.value)}
+                  value={inputs.annualRate}
+                  onChange={(e) => setInputs({...inputs, annualRate: e.target.value})}
                   className="input-field"
                   placeholder="예: 3.5"
                 />
               </div>
             </div>
 
-            <button
-              onClick={handleCalculate}
-              className="btn-primary w-full mt-6"
-            >
+            {/* 계산 버튼 */}
+            <button onClick={handleCalculate} className="btn btn-primary w-full mt-6">
               계산하기
             </button>
           </div>
 
           {/* 결과 카드 */}
           {result && (
-            <div className="result-card glass-effect rounded-2xl p-8 mb-8">
-              <h2 className="text-2xl font-bold text-gray-800 mb-6">계산 결과</h2>
-
+            <div className="slide-up" style={{ animationDelay: '0.1s' }}>
+              <h2 className="text-2xl font-bold mb-6 text-white">계산 결과</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-                <div className="stat-card" style={{"--card-from": "#3b82f6", "--card-to": "#2563eb"} as React.CSSProperties}>
-                  <div className="text-sm opacity-90 mb-1">총 납입액</div>
-                  <div className="text-3xl font-bold">{formatNumber(result.totalDeposit)}원</div>
+                <div className="result-card result-card-blue">
+                  <div className="text-sm text-gray-600 mb-1">총 납입액</div>
+                  <div className="text-3xl font-bold text-blue-600">{formatNumber(result.totalDeposit)}원</div>
                 </div>
-                <div className="stat-card" style={{"--card-from": "#10b981", "--card-to": "#059669"} as React.CSSProperties}>
-                  <div className="text-sm opacity-90 mb-1">총 이자</div>
-                  <div className="text-3xl font-bold">{formatNumber(result.totalInterest)}원</div>
+                <div className="result-card result-card-purple">
+                  <div className="text-sm text-gray-600 mb-1">총 이자</div>
+                  <div className="text-3xl font-bold text-purple-600">{formatNumber(result.totalInterest)}원</div>
                 </div>
-                <div className="stat-card" style={{"--card-from": "#8b5cf6", "--card-to": "#7c3aed"} as React.CSSProperties}>
-                  <div className="text-sm opacity-90 mb-1">만기 금액</div>
-                  <div className="text-3xl font-bold">{formatNumber(result.finalAmount)}원</div>
+                <div className="result-card result-card-pink">
+                  <div className="text-sm text-gray-600 mb-1">만기 금액</div>
+                  <div className="text-3xl font-bold text-pink-600">{formatNumber(result.finalAmount)}원</div>
                 </div>
               </div>
 
-              <h3 className="text-xl font-semibold mb-4 text-gray-800">월별 적립 내역</h3>
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm">
-                  <thead className="bg-gray-50">
-                    <tr>
-                      <th className="px-4 py-2 text-left">회차</th>
-                      <th className="px-4 py-2 text-right">납입액</th>
-                      <th className="px-4 py-2 text-right">이자</th>
-                      <th className="px-4 py-2 text-right">잔액</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-200">
-                    {result.monthlyResults.slice(0, 12).map((item) => (
-                      <tr key={item.month} className="hover:bg-gray-50">
-                        <td className="px-4 py-2">{item.month}</td>
-                        <td className="px-4 py-2 text-right">{formatNumber(item.deposit)}</td>
-                        <td className="px-4 py-2 text-right">{formatNumber(item.interest)}</td>
-                        <td className="px-4 py-2 text-right">{formatNumber(item.balance)}</td>
+              {/* 월별 적립 내역 */}
+              <div className="glass-card">
+                <h3 className="text-xl font-semibold mb-4 text-gray-900">월별 적립 내역</h3>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead className="bg-gray-50">
+                      <tr>
+                        <th className="px-4 py-2 text-left">회차</th>
+                        <th className="px-4 py-2 text-right">납입액</th>
+                        <th className="px-4 py-2 text-right">이자</th>
+                        <th className="px-4 py-2 text-right">잔액</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody className="divide-y divide-gray-200">
+                      {result.monthlyResults.slice(0, 12).map((item) => (
+                        <tr key={item.month} className="hover:bg-gray-50">
+                          <td className="px-4 py-2">{item.month}</td>
+                          <td className="px-4 py-2 text-right">{formatNumber(item.deposit)}</td>
+                          <td className="px-4 py-2 text-right">{formatNumber(item.interest)}</td>
+                          <td className="px-4 py-2 text-right">{formatNumber(item.balance)}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                {result.monthlyResults.length > 12 && (
+                  <p className="text-sm text-gray-500 mt-2 text-center">
+                    첫 12개월만 표시 (전체 {result.monthlyResults.length}개월)
+                  </p>
+                )}
               </div>
-              {result.monthlyResults.length > 12 && (
-                <p className="text-sm text-gray-500 mt-2 text-center">
-                  첫 12개월만 표시 (전체 {result.monthlyResults.length}개월)
-                </p>
-              )}
             </div>
           )}
 
           {/* 중간 광고 */}
-          <div className="my-12 flex justify-center">
-            <AdSense
-              slot="6343344230"
-              format="auto"
-              responsive={true}
-            />
+          <div className="py-12">
+            <AdSense slot="2247902816" format="auto" responsive={true} />
           </div>
         </main>
 
-        {/* 하단 모바일 광고 */}
-        <div className="py-8 flex justify-center lg:hidden">
-          <AdSense
-            slot="8263255594"
-            style={{ display: 'inline-block', width: '320px', height: '100px' }}
-          />
+        {/* 하단 광고 */}
+        <div className="py-12 flex justify-center">
+          <AdSense slot="2247902816" format="auto" responsive={true} />
         </div>
-
-        {/* 푸터 */}
-        <footer className="text-center py-8 text-white/60 text-sm">
-          <p>© 2025 생활 계산기 허브. All rights reserved.</p>
-        </footer>
       </div>
     </>
   )

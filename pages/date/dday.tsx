@@ -1,32 +1,34 @@
-import { useState, useEffect } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
+import { useState, useEffect } from 'react'
 import { AdSense } from '@/components/AdSense'
 import { calculateDday, DdayResult } from '@/lib/calculators/date/dday'
 
 export default function DdayCalculator() {
-  const [targetDate, setTargetDate] = useState('')
+  const [inputs, setInputs] = useState({
+    targetDate: ''
+  })
   const [result, setResult] = useState<DdayResult | null>(null)
   const [isLive, setIsLive] = useState(false)
 
   useEffect(() => {
-    if (!isLive || !targetDate) return
+    if (!isLive || !inputs.targetDate) return
 
     const interval = setInterval(() => {
       handleCalculate()
     }, 1000)
 
     return () => clearInterval(interval)
-  }, [isLive, targetDate])
+  }, [isLive, inputs.targetDate])
 
   const handleCalculate = () => {
-    if (!targetDate) {
+    if (!inputs.targetDate) {
       alert('목표 날짜를 입력해주세요')
       return
     }
 
-    const target = new Date(targetDate)
+    const target = new Date(inputs.targetDate)
     const calculatedResult = calculateDday({ targetDate: target })
     setResult(calculatedResult)
   }
@@ -43,55 +45,40 @@ export default function DdayCalculator() {
   return (
     <>
       <Head>
-        <title>D-Day 계산기 - 디데이 계산</title>
+        <title>D-Day 계산기 - 생활 계산기 허브</title>
         <meta name="description" content="목표 날짜까지 남은 일수를 실시간으로 확인해보세요. 디데이 계산기입니다." />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
-      <div className="min-h-screen">
+      <div className="min-h-screen pb-12">
         {/* 상단 광고 */}
         <div className="py-6 flex justify-center fade-in">
-          <AdSense
-            slot="2247902816"
-            style={{ display: 'inline-block', width: '728px', height: '90px' }}
-          />
+          <AdSense slot="2247902816" style={{ display: 'inline-block', width: '728px', height: '90px' }} />
         </div>
 
-        {/* 뒤로가기 버튼 */}
-        <div className="container mx-auto px-4 max-w-5xl">
-          <Link href="/" className="inline-flex items-center gap-2 text-white hover:text-white/80 mb-6 px-4 py-2 bg-white/10 rounded-lg backdrop-blur-sm transition-all">
-            <ArrowLeft className="w-5 h-5" />
-            <span>메인으로</span>
+        {/* 헤더 */}
+        <header className="page-header fade-in">
+          <Link href="/" className="back-button">
+            <ArrowLeft size={20} />
+            <span>홈으로</span>
           </Link>
-        </div>
+          <h1 className="page-title">📅 D-Day 계산기</h1>
+          <p className="page-subtitle">목표 날짜까지 남은 일수를 실시간으로 확인해보세요</p>
+        </header>
 
         {/* 메인 컨텐츠 */}
-        <main className="container mx-auto px-4 pb-16 max-w-5xl">
-          {/* 페이지 헤더 */}
-          <header className="text-center mb-12 fade-in">
-            <div className="inline-flex items-center gap-3 mb-4">
-              <span className="text-5xl">📅</span>
-              <h1 className="text-4xl md:text-5xl font-bold text-white drop-shadow-lg">
-                D-Day 계산기
-              </h1>
-            </div>
-            <p className="text-lg text-white/80 drop-shadow">
-              목표 날짜까지 남은 일수를 실시간으로 확인해보세요
-            </p>
-          </header>
-
-          {/* 입력 폼 카드 */}
-          <div className="glass-effect rounded-2xl p-8 mb-8 slide-up">
-            <h2 className="text-2xl font-bold text-gray-800 mb-6">계산 정보 입력</h2>
+        <main className="container-custom">
+          {/* 입력 카드 */}
+          <div className="glass-card mb-8 slide-up">
+            <h2 className="text-2xl font-bold mb-6 text-gray-900">입력 정보</h2>
 
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">목표 날짜</label>
                 <input
                   type="datetime-local"
-                  value={targetDate}
+                  value={inputs.targetDate}
                   onChange={(e) => {
-                    setTargetDate(e.target.value)
+                    setInputs({...inputs, targetDate: e.target.value})
                     setIsLive(false)
                   }}
                   className="input-field"
@@ -99,11 +86,9 @@ export default function DdayCalculator() {
               </div>
             </div>
 
+            {/* 계산 버튼 */}
             <div className="grid grid-cols-2 gap-4 mt-6">
-              <button
-                onClick={handleCalculate}
-                className="btn-primary"
-              >
+              <button onClick={handleCalculate} className="btn btn-primary">
                 계산하기
               </button>
               <button
@@ -121,11 +106,12 @@ export default function DdayCalculator() {
 
           {/* 결과 카드 */}
           {result && (
-            <div className="result-card glass-effect rounded-2xl p-8 mb-8">
-              <h2 className="text-2xl font-bold text-gray-800 mb-6">계산 결과</h2>
+            <div className="slide-up" style={{ animationDelay: '0.1s' }}>
+              <h2 className="text-2xl font-bold mb-6 text-white">계산 결과</h2>
 
+              {/* D-Day 표시 */}
               <div className="mb-8">
-                <div className="bg-gradient-to-r from-blue-500/20 to-purple-500/20 p-8 rounded-xl text-center border-2 border-purple-300">
+                <div className="glass-card p-8 text-center border-2 border-purple-300">
                   <div className="text-sm text-gray-600 mb-2 font-medium">
                     {result.isPast ? '경과한 날' : '남은 날'}
                   </div>
@@ -138,28 +124,29 @@ export default function DdayCalculator() {
                 </div>
               </div>
 
+              {/* 시간 상세 */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div className="stat-card" style={{"--card-from": "#3b82f6", "--card-to": "#2563eb"} as React.CSSProperties}>
-                  <div className="text-sm opacity-90 mb-1">일</div>
-                  <div className="text-4xl font-bold">{formatNumber(result.days)}</div>
+                <div className="result-card result-card-blue">
+                  <div className="text-sm text-gray-600 mb-1">일</div>
+                  <div className="text-4xl font-bold text-blue-600">{formatNumber(result.days)}</div>
                 </div>
-                <div className="stat-card" style={{"--card-from": "#10b981", "--card-to": "#059669"} as React.CSSProperties}>
-                  <div className="text-sm opacity-90 mb-1">시간</div>
-                  <div className="text-4xl font-bold">{formatNumber(result.hours)}</div>
+                <div className="result-card result-card-purple">
+                  <div className="text-sm text-gray-600 mb-1">시간</div>
+                  <div className="text-4xl font-bold text-purple-600">{formatNumber(result.hours)}</div>
                 </div>
-                <div className="stat-card" style={{"--card-from": "#8b5cf6", "--card-to": "#7c3aed"} as React.CSSProperties}>
-                  <div className="text-sm opacity-90 mb-1">분</div>
-                  <div className="text-4xl font-bold">{formatNumber(result.minutes)}</div>
+                <div className="result-card result-card-pink">
+                  <div className="text-sm text-gray-600 mb-1">분</div>
+                  <div className="text-4xl font-bold text-pink-600">{formatNumber(result.minutes)}</div>
                 </div>
-                <div className="stat-card" style={{"--card-from": "#f59e0b", "--card-to": "#d97706"} as React.CSSProperties}>
-                  <div className="text-sm opacity-90 mb-1">초</div>
-                  <div className="text-4xl font-bold">{formatNumber(result.seconds)}</div>
+                <div className="result-card result-card-orange">
+                  <div className="text-sm text-gray-600 mb-1">초</div>
+                  <div className="text-4xl font-bold text-orange-600">{formatNumber(result.seconds)}</div>
                 </div>
               </div>
 
               {isLive && (
                 <div className="mt-6 text-center">
-                  <span className="inline-flex items-center gap-2 text-sm text-green-600 font-medium">
+                  <span className="inline-flex items-center gap-2 text-sm text-green-600 font-medium bg-white px-4 py-2 rounded-full">
                     <span className="w-2 h-2 bg-green-600 rounded-full animate-pulse"></span>
                     실시간 업데이트 중
                   </span>
@@ -169,27 +156,15 @@ export default function DdayCalculator() {
           )}
 
           {/* 중간 광고 */}
-          <div className="my-12 flex justify-center">
-            <AdSense
-              slot="6343344230"
-              format="auto"
-              responsive={true}
-            />
+          <div className="py-12">
+            <AdSense slot="2247902816" format="auto" responsive={true} />
           </div>
         </main>
 
-        {/* 하단 모바일 광고 */}
-        <div className="py-8 flex justify-center lg:hidden">
-          <AdSense
-            slot="8263255594"
-            style={{ display: 'inline-block', width: '320px', height: '100px' }}
-          />
+        {/* 하단 광고 */}
+        <div className="py-12 flex justify-center">
+          <AdSense slot="2247902816" format="auto" responsive={true} />
         </div>
-
-        {/* 푸터 */}
-        <footer className="text-center py-8 text-white/60 text-sm">
-          <p>© 2025 생활 계산기 허브. All rights reserved.</p>
-        </footer>
       </div>
     </>
   )
