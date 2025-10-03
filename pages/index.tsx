@@ -113,7 +113,7 @@ export default function Home() {
       {/* 메인 컨텐츠 */}
       <main className="container-custom pb-24">
         {categories.map((category, idx) => (
-          <section key={idx} className="mb-20 slide-up" style={{ animationDelay: `${idx * 0.1}s` }}>
+          <section key={idx} className="mb-32 slide-up" style={{ animationDelay: `${idx * 0.1}s` }}>
             {/* 카테고리 헤더 */}
             <div className="flex items-center gap-4 mb-8">
               <div className="category-icon">
