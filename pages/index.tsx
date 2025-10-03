@@ -87,7 +87,7 @@ export default function Home() {
       </Head>
 
       {/* 상단 광고 */}
-      <div className="py-6 flex justify-center fade-in">
+      <div className="pt-8 pb-12 flex justify-center fade-in">
         <AdSense
           slot="2247902816"
           style={{ display: 'inline-block', width: '728px', height: '90px' }}
@@ -113,7 +113,7 @@ export default function Home() {
       {/* 메인 컨텐츠 */}
       <main className="container-custom pb-24">
         {categories.map((category, idx) => (
-          <section key={idx} className="mb-16 slide-up" style={{ animationDelay: `${idx * 0.1}s` }}>
+          <section key={idx} className="mb-20 slide-up" style={{ animationDelay: `${idx * 0.1}s` }}>
             {/* 카테고리 헤더 */}
             <div className="flex items-center gap-4 mb-8">
               <div className="category-icon">
@@ -139,7 +139,7 @@ export default function Home() {
 
             {/* 중간 광고 (첫 번째 카테고리 이후) */}
             {idx === 0 && (
-              <div className="py-12 flex justify-center">
+              <div className="pt-16 pb-8 flex justify-center">
                 <AdSense
                   slot="2247902816"
                   format="auto"
@@ -152,7 +152,7 @@ export default function Home() {
         ))}
 
         {/* 하단 광고 */}
-        <div className="py-12 flex justify-center">
+        <div className="pt-16 pb-12 flex justify-center">
           <AdSense
             slot="2247902816"
             format="auto"

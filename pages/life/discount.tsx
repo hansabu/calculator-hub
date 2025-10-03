@@ -42,7 +42,7 @@ export default function DiscountCalculator() {
 
       <div className="min-h-screen pb-12">
         {/* 상단 광고 */}
-        <div className="py-6 flex justify-center fade-in">
+        <div className="pt-8 pb-12 flex justify-center fade-in">
           <AdSense slot="2247902816" style={{ display: 'inline-block', width: '728px', height: '90px' }} />
         </div>
 
@@ -59,7 +59,7 @@ export default function DiscountCalculator() {
         {/* 메인 컨텐츠 */}
         <main className="container-custom">
           {/* 입력 카드 */}
-          <div className="glass-card mb-8 slide-up">
+          <div className="glass-card mb-12 slide-up">
             <h2 className="text-2xl font-bold mb-6 text-gray-900">입력 정보</h2>
 
             <div className="space-y-4">
@@ -155,13 +155,13 @@ export default function DiscountCalculator() {
           )}
 
           {/* 중간 광고 */}
-          <div className="py-12">
+          <div className="pt-16 pb-12">
             <AdSense slot="2247902816" format="auto" responsive={true} />
           </div>
         </main>
 
         {/* 하단 광고 */}
-        <div className="py-12 flex justify-center">
+        <div className="pt-16 pb-12 flex justify-center">
           <AdSense slot="2247902816" format="auto" responsive={true} />
         </div>
       </div>
