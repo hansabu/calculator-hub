@@ -146,7 +146,7 @@ export default function TimezoneCalculator() {
         {/* 메인 컨텐츠 */}
         <main className="container-custom">
 
-          <div className="grid md:grid-cols-2 gap-6 mb-12 slide-up">
+          <div className="grid md:grid-cols-2 gap-6 mb-12 slide-up relative">
             {/* 서울 시간 */}
             <div className="result-card result-card-blue">
               <div className="text-center">
@@ -159,6 +159,9 @@ export default function TimezoneCalculator() {
                 </div>
               </div>
             </div>
+
+            {/* 구분선 */}
+            <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-gray-300 to-transparent transform -translate-x-1/2"></div>
 
             {/* 선택한 도시 시간 */}
             <div className="result-card result-card-purple">
@@ -201,42 +204,41 @@ export default function TimezoneCalculator() {
           {/* 비행시간 계산 */}
           <div className="glass-card mb-12 slide-up" style={{ animationDelay: '0.2s' }}>
             <h2 className="text-2xl font-bold mb-6 text-gray-900">✈️ 도착 시간 계산</h2>
-            <div className="grid md:grid-cols-3 gap-4 mb-4">
+            <div className="space-y-4">
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  비행시간 (시간)
+                  비행시간
                 </label>
-                <input
-                  type="number"
-                  value={flightHours}
-                  onChange={(e) => setFlightHours(e.target.value)}
-                  placeholder="0"
-                  min="0"
-                  className="input-field"
-                />
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <input
+                      type="number"
+                      value={flightHours}
+                      onChange={(e) => setFlightHours(e.target.value)}
+                      placeholder="시간"
+                      min="0"
+                      className="input-field"
+                    />
+                  </div>
+                  <div>
+                    <input
+                      type="number"
+                      value={flightMinutes}
+                      onChange={(e) => setFlightMinutes(e.target.value)}
+                      placeholder="분"
+                      min="0"
+                      max="59"
+                      className="input-field"
+                    />
+                  </div>
+                </div>
               </div>
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  비행시간 (분)
-                </label>
-                <input
-                  type="number"
-                  value={flightMinutes}
-                  onChange={(e) => setFlightMinutes(e.target.value)}
-                  placeholder="0"
-                  min="0"
-                  max="59"
-                  className="input-field"
-                />
-              </div>
-              <div className="flex items-end">
-                <button
-                  onClick={calculateArrival}
-                  className="btn btn-primary w-full"
-                >
-                  계산하기
-                </button>
-              </div>
+              <button
+                onClick={calculateArrival}
+                className="btn btn-primary w-full"
+              >
+                계산하기
+              </button>
             </div>
 
             {arrivalTime && (
