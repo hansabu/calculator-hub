@@ -140,6 +140,13 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 20px;
   box-shadow: var(--shadow-xl);
+  padding: 24px;
+}
+
+@media (min-width: 768px) {
+  .glass-card {
+    padding: 32px;
+  }
 }
 
 /* Button Styles */
