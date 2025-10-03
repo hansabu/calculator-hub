@@ -60,12 +60,6 @@ export default function Home() {
           href: '/life/discount',
           icon: '🏷️'
         },
-        {
-          name: '단위 변환기',
-          desc: '길이, 무게, 부피, 온도 단위 변환',
-          href: '/life/unit-converter',
-          icon: '📏'
-        },
       ]
     },
     {
@@ -78,12 +72,6 @@ export default function Home() {
           desc: '목표일까지 남은 날짜 계산',
           href: '/date/dday',
           icon: '⏰'
-        },
-        {
-          name: '해외여행 시차 계산기',
-          desc: '세계 도시 시간 및 도착시간 계산',
-          href: '/date/timezone',
-          icon: '🌍'
         },
       ]
     }
